@@ -1,0 +1,65 @@
+openapi: 3.0.3
+info:
+  title: BiteSpeed Challenge 🙂
+  version: 1.0.0
+  x-logo:
+  description: |
+    ## EndPoints
+    ## /identify:
+       - Helps in finding the customer details
+       - Creating User
+       - Linking the User data
+       - Added YAML file for little validation
+    ## Instructions
+       - run npm install in cli
+       - then use npm start
+servers:
+  - url: http://localhost:4001/api
+paths:
+  '/identify':
+    post:
+      summary: To Identify or Create user and fetch the data
+      description: >-
+        This helps in creating the New User Data and Fetching the user data as a
+        response
+      x-eov-operation-handler: handle-operations
+      operationId: identifyUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IdentifyRequest'
+      responses:
+        200:
+          description: 'This will be the response'
+          content:
+            
+            application/json:
+              
+                example: |-
+                    {
+                    "contact":{
+                    "primaryContatctId": 1,
+                    "emails": ["lorraine@hillvalley.edu","mcfly@hillvalley.edu"],
+                    "phoneNumbers": ["123456"],
+                    "secondaryContactIds": [23]
+                    }
+                    }
+components:
+  schemas:
+    IdentifyRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - email
+        - phoneNumber
+      properties:
+        email:
+          type: string
+          format: email
+          example: mcfly@hillvalley.edu
+        phoneNumber:
+          type: string
+          pattern: ^\d{6,10}$
+          example: '123456'
