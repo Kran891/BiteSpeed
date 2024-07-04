@@ -6,12 +6,12 @@ import http from 'http'
 import { middleware } from 'express-openapi-validator'
 import path from 'path'
 //Read oas.yaml for instructions
-const docs=YAML.load('./oas.yaml');
+const docs=YAML.load(path.join(__dirname,'./oas.yaml'));
 const app=express()
 app.use(json())
 app.use("/docs",SwaggerUI.serve,SwaggerUI.setup(docs));
 app.use(middleware({
-    apiSpec: './oas.yaml',
+    apiSpec: path.join(__dirname,'./oas.yaml'),
     operationHandlers: path.join(__dirname),
     validateRequests: true, 
   }))
